@@ -69,7 +69,7 @@ public class MouseEventHandler extends MouseAdapter {
 			else
 				b.Square[shX][shY].Hlocated=true;
 		
-			if(b.wallShadow.IsVertical())		//수직인경우, 벽 겹침 제한
+			if(b.wallShadow.IsVertical())		//수직인경우,  restrict overlap of wall
 			{	
 				b.Square[shX][shY].Vavail=false;
 				if(shY+1<boardPanel.PanelSize)
@@ -78,7 +78,7 @@ public class MouseEventHandler extends MouseAdapter {
 					b.Square[shX][shY-1].Vavail=false;
 				if(shX>0&&shX<boardPanel.SquareSize)
 					b.Square[shX-1][shY+1].Havail=false;				
-			}else							//수평인경우, 벽 겹침 제한
+			}else							//수평인경우  restrict overlap of wall
 			{
 				b.Square[shX][shY].Havail=false;
 				
@@ -204,33 +204,35 @@ public class MouseEventHandler extends MouseAdapter {
 		
 		int moveX =getSq(e.getX()) - currP.getX();
 		int moveY =getSq(e.getY()) -currP.getY();
+		int x = currP.getX();
+		int y = currP.getY();
 		
-		if(flag==1)							//게임 턴일 때, setmovable의 결과에 따라 플레이어를 움직이는 알고리즘/구현실패
+		if(flag==1&&(moveX==0||moveY==0))		//게임 턴일 때, setmovable의 결과에 따라 플레이어를 움직이는 알고리즘/구현실패
 		{		
-			if(moveY==-1&&currP.moveable[0]!=0)
+			if((moveY==-1||moveY==-2)&&currP.moveable[0]!=0)		//move top dir square
 			{
-				currP.setLocation(getSq(e.getX()), getSq(e.getY()));		
+				currP.setLocation(x,y-currP.moveable[0]);		
 				flag=0;
 				if(b.Turn==1)b.Turn=0;
 				else b.Turn=1;
 			}
-			else if(moveX==1&&currP.moveable[1]!=0) 
+			else if((moveX==1||moveX==2)&&currP.moveable[1]!=0) 
 			{
-				currP.setLocation(getSq(e.getX()), getSq(e.getY()));
+				currP.setLocation(x+currP.moveable[1],y);
 				flag=0;
 				if(b.Turn==1)b.Turn=0;
 				else b.Turn=1;
 			}
-			else if(moveY==+1&&currP.moveable[2]!=0)
+			else if((moveY==1||moveY==2)&&currP.moveable[2]!=0)
 			{
-				currP.setLocation(getSq(e.getX()), getSq(e.getY()));
+				currP.setLocation(x,y+currP.moveable[2]);
 				flag=0;
 				if(b.Turn==1)b.Turn=0;
 				else b.Turn=1;
 			}
-			else if(moveX==-1&&currP.moveable[3]!=0)
+			else if((moveX==-1||moveX==-2)&&currP.moveable[3]!=0)
 			{
-				currP.setLocation(getSq(e.getX()), getSq(e.getY()));
+				currP.setLocation(x-currP.moveable[3],y);
 				flag=0;
 				if(b.Turn==1)b.Turn=0;
 				else b.Turn=1;

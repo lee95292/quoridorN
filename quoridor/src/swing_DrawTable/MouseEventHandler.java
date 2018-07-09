@@ -151,47 +151,45 @@ public class MouseEventHandler extends MouseAdapter {
 		{
 			currP.moveable[i]=1;
 		}
+		// =====벽의 위치에 따라 이동을 제한하는 코드=====
+		if(b.Square[x][y].Hlocated) 	
+			currP.moveable[0]=0;
 		
-		if(b.Square[x][y].Hlocated) 								// top Wall located
-		{
-			if(x>0&&b.Square[x-1][y].Hlocated)
-				currP.moveable[0]=0;	
-			currP.moveable[0]=0;			
-		}
-		if(x<boardPanel.PanelSize-1&&b.Square[x+1][y].Vlocated) 	// right 
-		{
-			if(y>0&&b.Square[x+1][y-1].Vlocated)
-				currP.moveable[1]=0;
-			currP.moveable[1]=0;
-		}
-		if(y<boardPanel.PanelSize-1&&b.Square[x][y+1].Hlocated) //bottom  
-		{
-			if(x>0&&b.Square[x-1][y+1].Hlocated)
-				currP.moveable[2]=0;
-			currP.moveable[2]=0;
-		}
-		if(b.Square[x][y].Hlocated) 	//left
-		{
-			if(y>0&&b.Square[x][y-1].Hlocated)
-				currP.moveable[3]=0;
+		if(b.Square[x][y].Hlocated) 	//left		
 			currP.moveable[3]=0;
-		}    
-		if(currP.getY()-nextP.getY()==1)	//next player on top
-		{
+		
+		if(x>0&&b.Square[x-1][y].Hlocated)
+			currP.moveable[0]=0;
+		
+		if(x<boardPanel.PanelSize-1&&b.Square[x+1][y].Vlocated) 	// right 	
+			currP.moveable[1]=0;
+		
+		if(y>0&&x<boardPanel.PanelSize-1&&b.Square[x+1][y-1].Vlocated)
+			currP.moveable[1]=0;
+		
+		if(y<boardPanel.PanelSize-1&&b.Square[x][y+1].Hlocated) //bottom  
+			currP.moveable[2]=0;
+		
+		if(x>0&&y<boardPanel.PanelSize-1&&b.Square[x-1][y+1].Hlocated)
+			currP.moveable[2]=0;
+		
+		if(y>0&&b.Square[x][y-1].Hlocated)
+			currP.moveable[3]=0;
+
+			//=====다른 플레이어와 근접했을 때, 점프해주도록 설정====
+		
+		if(currP.getY()-nextP.getY()==1&&currP.getX()==nextP.getX())	//next player on top
 			currP.moveable[0]=2;			
-		}
-		if(currP.getX()-nextP.getX()==-1)	//right	
-		{
+		
+		if(currP.getX()-nextP.getX()==-1&&currP.getY()==nextP.getY())	//right	
 			currP.moveable[1]=2;			
-		}
-		if(currP.getY()-nextP.getY()==-1)	//bottom
-		{
-			currP.moveable[2]=2;			
-		}
-		if(currP.getX()-nextP.getX()==1)	//left
-		{
-			currP.moveable[3]=2;			
-		}
+		
+		if(currP.getY()-nextP.getY()==-1&&currP.getX()==nextP.getX())	//bottom
+				currP.moveable[2]=2;			
+		
+		if(currP.getX()-nextP.getX()==1&&currP.getY()==nextP.getY())	//left
+				currP.moveable[3]=2;			
+		
 			
 		
 	}
@@ -207,7 +205,7 @@ public class MouseEventHandler extends MouseAdapter {
 		int x = currP.getX();
 		int y = currP.getY();
 		
-		if(flag==1&&(moveX==0||moveY==0))		//게임 턴일 때, setmovable의 결과에 따라 플레이어를 움직이는 알고리즘/구현실패
+		if(flag==1&&(moveX==0||moveY==0))		//게임 턴일 때, setmovable의 결과에 따라 플레이어를 움직이는 알고리즘/
 		{		
 			if((moveY==-1||moveY==-2)&&currP.moveable[0]!=0)		//move top dir square
 			{
@@ -233,7 +231,7 @@ public class MouseEventHandler extends MouseAdapter {
 			else if((moveX==-1||moveX==-2)&&currP.moveable[3]!=0)
 			{
 				currP.setLocation(x-currP.moveable[3],y);
-				flag=0;
+		  		flag=0;
 				if(b.Turn==1)b.Turn=0;
 				else b.Turn=1;
 			}

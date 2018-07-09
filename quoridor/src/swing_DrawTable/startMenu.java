@@ -64,6 +64,12 @@ public class startMenu extends JFrame{
 			{
 				dispose();
 			}
+			
+			if(b.getText().equals("2인용 네트워크 게임(게임생성"))
+			{
+				dispose();
+				//startMenu
+			}
 		}
 		
 	}

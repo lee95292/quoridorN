@@ -10,6 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import clientPlay.ClientUI;
+import serverPlay.ServerUI;
+
 public class startMenu extends JFrame{
 	
 	private JButton[] menu = new JButton[8];
@@ -65,10 +68,16 @@ public class startMenu extends JFrame{
 				dispose();
 			}
 			
-			if(b.getText().equals("2인용 네트워크 게임(게임생성"))
+			if(b.getText().equals("2인용 네트워크 게임(게임생성)"))
 			{
 				dispose();
+				startMenu = new ServerUI();
 				//startMenu
+			}
+			if(b.getText().equals("2인용  네트워크 게임(게임참여)"))
+			{
+				dispose();
+				startMenu = new ClientUI();
 			}
 		}
 		
